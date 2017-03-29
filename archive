@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+# Archive supportive script. Copyright (c) 2017, anselmos.github.com
+# Script will create a tar.gz file from any file/folder and remove that origin file/folder.
+
+tar -zcvf $1.tar.gz $1
+rm -r $1
