@@ -1,0 +1,55 @@
+#!/usr/bin/python
+"""
+Simple script to output Markdown text from git log
+
+@Copyright 2017 Anselmos (github.com/Anselmos)
+"""
+import subprocess
+import argparse
+
+SCRIPT_AFTER = "$(date +%Y-%m-%d) 00:00"
+SCRIPT = "git log --after='{}' --oneline"
+GIT_REPO_NAME = "anselmos/Biking-Endorphines"
+GIT_REPO_COMMIT_PREFIX = "https://github.com/{}/commit".format(GIT_REPO_NAME)
+MARKDOWN_MSG = "[{}]("+ GIT_REPO_COMMIT_PREFIX + "/{})"
+
+def get_commits_from_script(after=SCRIPT_AFTER):
+    """Gets all commits from SCRIPT output"""
+
+    script_output = subprocess.check_output(SCRIPT.format(after), shell=True)
+    commit_line = script_output.split("\n")
+    return_commits = []
+    for commit_data in commit_line:
+        commit_data_splitted = commit_data.split()
+        if len(commit_data_splitted) > 0:
+            commit_id, commit_msg = commit_data.split()[0], commit_data.split()[1:]
+            commit_data = {
+                "id": commit_id,
+                "msg": commit_msg
+            }
+            return_commits.append(commit_data)
+    return return_commits
+
+def transform_to_markdown(after=SCRIPT_AFTER):
+    """ Transforms data from get_commits_from_script to MARKDOWN type for blog"""
+    commits = get_commits_from_script(after)
+    for commit in commits:
+        commit_id, commit_msg = commit.get('id'), commit.get('msg')
+        print MARKDOWN_MSG.format(" ".join(commit_msg), commit_id)
+
+
+def main():
+    "Main"
+    parser = argparse.ArgumentParser(
+        description="Transforms git log information into Markdown data for blog"
+    )
+    parser.add_argument('--after', help="Date after which take log-data. I.e. 2017-01-01")
+    args = parser.parse_args()
+    if args.after:
+        transform_to_markdown(args.after)
+    else:
+        transform_to_markdown()
+
+
+if __name__ == "__main__":
+    main()
