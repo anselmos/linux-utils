@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# NewProject supportive script. Copyright (c) 2017, anselmos.github.com
+# Script will create new project directory, initialize git and create empty init commit for startup.
+
+PROJECT=$1
+
+mkdir $PROJECT
+cd $PROJECT && git init . && git commit --allow-empty -m "Initialization of empty project '$PROJECT'"
