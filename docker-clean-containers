@@ -1,0 +1,7 @@
+#!/bin/sh
+# Docker-Clean-Containers supportive script. Copyright (c) 2017, anselmos.github.com
+# Originally found at : mugifly https://gist.github.com/mugifly/ffd3973d34c4a1b7c303cf024944a6f4
+# Splitted into separated files
+
+echo -e "-- Removing exited containers --\n"
+docker ps --all --quiet --filter="status=exited" | xargs --no-run-if-empty docker rm --volumes
