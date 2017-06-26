@@ -1,8 +1,20 @@
 #!/usr/bin/env bash
 # NewProject supportive script. Copyright (c) 2017, anselmos.github.com
+# Uses two parameters - newproject [PROJECT] [TYPE]
+# Parameters: PROJECT - you define name of your project and for this name will be created a dir.
+# Parameters: TYPE - type of the project. For now only 'python' type is supported - and it creates a venv.
 # Script will create new project directory, initialize git and create empty init commit for startup.
 
 PROJECT=$1
+TYPE=$2
 
-mkdir $PROJECT
-cd $PROJECT && git init . && git commit --allow-empty -m "Initialization of empty project '$PROJECT'"
+if [ -n "$PROJECT" ]; then
+    mkdir $PROJECT
+    cd $PROJECT && git init . && git commit --allow-empty -m "Initialization of empty project '$PROJECT'"
+    if [ "$TYPE" = "python" ]; then
+        echo "A python project you say, huh? Ok. Let's create a virtualenv for you!"
+        virtualenv .env
+        wget https://www.gitignore.io/api/python -O .gitignore
+        git add .gitignore && git commit -m "Adds gitignore for python"
+    fi
+fi
