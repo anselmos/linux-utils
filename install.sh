@@ -13,6 +13,7 @@ cp newproject $install_path/
 # Docker Cleaners!
 cp docker-clean* $install_path/
 cp *.py $install_path/
+cp *.sh $install_path/
 
 ln -s $install_path/archive $bin_path/archive
 ln -s $install_path/tarit $bin_path/tarit
@@ -25,3 +26,4 @@ ln -s $install_path/docker-clean-containers $bin_path/docker-clean-containers
 ln -s $install_path/docker-clean-volumes $bin_path/docker-clean-volumes
 ln -s $install_path/docker-clean-images $bin_path/docker-clean-images
 ln -s $install_path/create_dirs_based_on_template.py $bin_path/create_template_dirs
+ln -s $install_path/refactor_text.sh $bin_path/refactor_text
