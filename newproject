@@ -17,18 +17,18 @@ if [ -n "$PROJECT" ]; then
     cd $PROJECT && git init . && git commit --allow-empty -m "Initialization of empty project '$PROJECT'"
     if [ "$TYPE" = "python" ]; then
         echo "A python project you say, huh? Ok. Let's create a virtualenv for you!"
-	pipenv --python 3.6.4
+        pipenv --python 3.6.4
         wget https://www.gitignore.io/api/python -O .gitignore
         git add .gitignore && git commit -m "Adds gitignore for python"
     elif [ "$TYPE" == "docker" ]; then
-	echo -e "FROM ... \nENTRYPOINT ..." > Dockerfile
-	echo -e "#!/bin/bash\ndocker build -t anselmos/$PROJECT ." > build.sh
-	chmod +x build.sh
-	echo -e "#!/bin/bash\ndocker run -it anselmos/$PROJECT /bin/bash" > run_bash.sh
-	chmod +x run_bash.sh
-	echo -e "#!/bin/bash\ndocker run -it anselmos/$PROJECT" > run.sh
-	chmod +x run.sh
+        echo -e "FROM ... \nENTRYPOINT ..." > Dockerfile
+        echo -e "#!/bin/bash\ndocker build -t anselmos/$PROJECT ." > build.sh
+        chmod +x build.sh
+        echo -e "#!/bin/bash\ndocker run -it anselmos/$PROJECT /bin/bash" > run_bash.sh
+        chmod +x run_bash.sh
+        echo -e "#!/bin/bash\ndocker run -it anselmos/$PROJECT" > run.sh
+        chmod +x run.sh
         git add Dockerfile && git commit -m "Adds empty dockerfile"
-	vim Dockerfile
+        vim Dockerfile
     fi
 fi
